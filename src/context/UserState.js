@@ -6,11 +6,8 @@ import UserContext from "./UserContext";
 import firebase from 'firebase'
 
 const UserState = (props) => {
-  const initialState = {
-    user: 'inicio'
-  };
 
-   const [state  , setState ] = useState(initialState); 
+   const [user  , setUser ] = useState(''); 
 
 
   const handleAuth = () => {
@@ -18,13 +15,21 @@ const UserState = (props) => {
     provider.addScope('https://www.googleapis.com/auth/plus.login')
 
     firebase.auth().signInWithPopup(provider)
-      .then(result => console.log(`${result.user.email} ha iniciado sesión`))
+      .then(result =>{
+        setUser(result.user);
+        console.log(`${result.user.email} ha iniciado sesión`);
+      }
+         
+         )
       .catch(error => console.log(`Error ${error.code}: ${error.message}`))
   };
 
   const handleLogout = () => {
     firebase.auth().signOut()
-      .then(result => console.log('Te has desconectado correctamente'))
+      .then(result =>{
+        setUser(null);
+        console.log('Te has desconectado correctamente');
+    } )
       .catch(error => console.log(`Error ${error.code}: ${error.message}`))
   };
 
@@ -39,7 +44,7 @@ const UserState = (props) => {
   return (
     <UserContext.Provider
       value={{
-        user: state.user,
+        user: user,
         handleAuth,
         handleLogout,
       }}

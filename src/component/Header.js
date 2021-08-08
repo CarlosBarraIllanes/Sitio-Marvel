@@ -1,6 +1,4 @@
-import React, { useContext, useEffect } from "react";
-import UserContext from "../context/UserContext";
-import firebase from 'firebase/app'
+import React from "react";
 import '../assets/css/media_query.css';
 import '../assets/css/bootstrap.css';
 import '../assets/css/font-awesome.min.css';
@@ -17,9 +15,7 @@ import logo from '../assets/images/logo.png';
 
 const Header = () => {
 
-	const {user} = useContext(UserContext);
 
-	console.log(user);
 
 	moment.defineLocale('en-foo', {
 		parentLocale: 'es',
@@ -48,25 +44,8 @@ const Header = () => {
 
 						<div className="col-12 col-md-3 fh5co_padding_menu">
 							<img src={logo} alt="img" className="fh5co_logo_width" />
-						</div>
-						<div className="col-12 col-md-9 align-self-center fh5co_mediya_right">
-							<div className="text-center d-inline-block">
-								<a className="fh5co_display_table"><div className="fh5co_verticle_middle"><i className="fa fa-search"></i></div></a>
-							</div>
-							<div className="text-center d-inline-block">
-								<a className="fh5co_display_table"><div className="fh5co_verticle_middle"><i className="fa fa-linkedin"></i></div></a>
-							</div>
-
-							<Login />
-							<div className="text-center d-inline-block">
-								<a href="https://twitter.com/fh5co" target="_blank" className="fh5co_display_table"><div className="fh5co_verticle_middle"><i className="fa fa-twitter"></i></div></a>
-							</div>
-							<div className="text-center d-inline-block">
-								<a href="https://fb.com/fh5co" target="_blank" className="fh5co_display_table"><div className="fh5co_verticle_middle"><i className="fa fa-facebook"></i></div></a>
-							</div>
-
-							<div className="clearfix"></div>
-						</div>
+						</div>							
+						<Login />						
 					</div>
 				</div>
 			</div>

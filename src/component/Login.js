@@ -1,64 +1,49 @@
-import React, { Component } from 'react';
-import withFirebaseAuth from 'react-with-firebase-auth'
-import firebase from 'firebase/app'
+import React, { useContext } from 'react'
+import UserContext from "../context/UserContext";
+import LoginGoogle from './LoginGoogle'
+export default function Login() {
 
-import 'firebase/auth';
-import firebaseConfig from '../FirebaseConfig';
+    const {user,handleLogout} = useContext(UserContext);
 
-const firebaseApp = firebase.initializeApp(firebaseConfig);
+    return (
+        <div className="col-12 col-md-9 align-self-center fh5co_mediya_right">
 
-class Login extends Component {
+            {user &&
+                <>
+                  
 
-    state = {
-        userLog :  firebase.auth().currentUser
-      
-    }
-
-    componentDidMount() {
-        firebase.auth().onAuthStateChanged((user) => {
-
-          });
-             
-    }
+                    <div class="footer_main_title py-3">
+                         Hola , {user.displayName}
+                         <a onClick={handleLogout} class="myButton">Salir</a>
+                         </div>       
+                   
+                </>
+            }
 
 
-    render() {
-        const {
-            user,
-            signOut,
-            signInWithGoogle,
-        } = this.props;
+            {!user &&
+                <>
+                    <div className="text-center d-inline-block">
+                        <a className="fh5co_display_table"><div className="fh5co_verticle_middle"><i className="fa fa-search"></i></div></a>
+                    </div>
+                    <div className="text-center d-inline-block">
+                        <a className="fh5co_display_table"><div className="fh5co_verticle_middle"><i className="fa fa-linkedin"></i></div></a>
+                    </div>
 
-        return (
-            <div className="text-center d-inline-block">
-                {user &&
-                    <p>Hello, {user.displayName}</p>
+                    <LoginGoogle />
 
-                }
+                    <div className="text-center d-inline-block">
+                        <a href="https://twitter.com/fh5co" target="_blank" className="fh5co_display_table"><div className="fh5co_verticle_middle"><i className="fa fa-twitter"></i></div></a>
+                    </div>
+                    <div className="text-center d-inline-block">
+                        <a href="https://fb.com/fh5co" target="_blank" className="fh5co_display_table"><div className="fh5co_verticle_middle"><i className="fa fa-facebook"></i></div></a>
+                    </div>
 
-                {
-                    user
-                        ? <button onClick={signOut}>Sign out</button>
-                        :
-                        <a className="fh5co_display_table" onClick={signInWithGoogle}>
-                            <div className="fh5co_verticle_middle">
-                                <i className="fa fa-google-plus"></i>
-                            </div>
-                        </a>
 
-                }
-            </div>
-        );
-    }
+                    <div className="clearfix"></div>
+                </>
+            }
+
+        </div>
+    )
 }
-
-const firebaseAppAuth = firebaseApp.auth();
-
-const providers = {
-    googleProvider: new firebase.auth.GoogleAuthProvider(),
-};
-
-export default withFirebaseAuth({
-    providers,
-    firebaseAppAuth,
-})(Login);
